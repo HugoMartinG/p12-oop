@@ -1,0 +1,100 @@
+#include <iostream>
+#include <cstring>
+#include <cmath>
+
+using namespace std;
+
+// Enumeración para representar las direcciones del robot
+enum Direction {
+  North,
+  East,
+  South,
+  West
+};
+
+// Clase que representa al robot
+class Robot {
+  private:
+    // Coordenadas x e y del robot
+    int x, y;
+    // Dirección actual del robot
+    Direction direction;
+
+  public:
+    // Constructor que inicializa al robot en la posición (0, 0) mirando hacia el norte
+    Robot() : x(0), y(0), direction(North) {}
+
+    // Método para girar el robot a la derecha
+    void turnRight() {
+      direction = (Direction)((direction + 1) % 4);
+    }
+
+    // Método para girar el robot a la izquierda
+    void turnLeft() {
+      direction = (Direction)((direction + 3) % 4);
+    }
+
+    // Método para avanzar el robot
+    void advance() {
+      switch (direction) {
+        case North:
+          y++;
+          break;
+        case East:
+          x++;
+          break;
+        case South:
+          y--;
+          break;
+        case West:
+          x--;
+          break;
+      }
+    }
+
+    // Método para obtener la posición actual del robot
+    pair<int, int> getPosition() {
+      return make_pair(x, y);
+    }
+
+    // Método para obtener la dirección actual del robot
+    Direction getDirection() {
+      return direction;
+    }
+};
+
+int main() {
+  // Creamos una instancia del robot
+  Robot robot;
+
+  // Le damos al robot las instrucciones para moverse
+  robot.turnRight();
+  robot.advance();
+  robot.advance();
+  robot.turnLeft();
+  robot.advance();
+  robot.turnLeft();
+
+  // Obtenemos la posición final y dirección del robot
+  pair<int, int> position = robot.getPosition();
+  Direction direction = robot.getDirection();
+
+  // Mostramos la posición final y dirección del robot
+  cout << "Robot is at position (" << position.first << ", " << position.second << ") and facing ";
+  switch (direction) {
+    case North:
+      cout << "north" << endl;
+      break;
+    case East:
+      cout << "east" << endl;
+      break;
+    case South:
+      cout << "south" << endl;
+      break;
+    case West:
+      cout << "west" << endl;
+      break;
+  }
+
+  return 0;
+}
